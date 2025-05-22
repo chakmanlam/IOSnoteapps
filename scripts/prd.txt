@@ -1,0 +1,130 @@
+# AINotes - Simple Note-Taking App
+## Product Requirements Document
+
+### Overview
+AINotes is a simple, clean note-taking app for iOS that allows users to create, edit, and organize their text notes. This is a beginner-friendly project focused on learning iOS development fundamentals without complex integrations.
+
+### Target Platform
+- iOS (iPhone)
+- Minimum iOS version: iOS 15.0
+- Built with SwiftUI and Xcode 16.3
+- Uses SwiftData for local storage
+
+### Core Features
+
+#### 1. Note Management
+- Create new text notes
+- Edit existing notes
+- Delete notes with confirmation
+- Automatic saving as user types
+
+#### 2. Note List View
+- Display all notes in a scrollable list
+- Show note title (first line) and preview (next few lines)
+- Display creation/modification date
+- Pull-to-refresh functionality
+
+#### 3. Note Detail/Edit View
+- Full-screen text editing
+- Large, comfortable text input area
+- Character count display
+- Auto-focus on text field when creating new notes
+
+#### 4. Search Functionality
+- Search bar at top of note list
+- Real-time filtering as user types
+- Search through note titles and content
+- Clear search option
+
+#### 5. Basic Organization
+- Sort notes by date (newest first)
+- Display creation and last modified dates
+- Simple, clean interface with good typography
+
+### User Interface Design
+- **Clean, minimal design** using system colors and fonts
+- **Navigation-based structure** (List → Detail views)
+- **System-standard components** (NavigationView, List, etc.)
+- **Accessibility support** with proper labels and sizing
+- **Light/Dark mode support** automatically
+
+### Technical Implementation
+
+#### Architecture
+- **Framework**: SwiftUI with MVVM pattern
+- **Data Storage**: SwiftData for local persistence
+- **No external APIs** or complex integrations
+
+#### Data Model
+```swift
+@Model
+class Note {
+    var id: UUID
+    var title: String // Derived from first line
+    var content: String // Full note content
+    var createdAt: Date
+    var modifiedAt: Date
+}
+```
+
+#### Key Views
+- **NoteListView**: Main screen showing all notes
+- **NoteDetailView**: Create/edit individual notes
+- **SearchBar**: Built-in SwiftUI search functionality
+
+### User Flow
+1. **App Launch**: Show list of existing notes (empty state if no notes)
+2. **Create Note**: Tap "+" button → Open blank note editor → Start typing
+3. **Edit Note**: Tap existing note → Edit content → Auto-save changes
+4. **Search**: Pull down to reveal search bar → Type to filter notes
+5. **Delete**: Swipe left on note → Confirm deletion
+
+### Success Criteria
+- **Functional CRUD**: Create, read, update, delete notes successfully
+- **Data Persistence**: Notes save and load properly between app launches
+- **Smooth Performance**: Fast, responsive interface
+- **Intuitive UX**: Easy to use without instructions
+- **Reliable**: No crashes or data loss
+
+### Development Phases
+
+#### Phase 1: Basic Structure (30 minutes)
+- Create Xcode project with proper setup
+- Basic SwiftUI navigation structure
+- Simple Note model with SwiftData
+
+#### Phase 2: Core Functionality (45 minutes)
+- Note list view displaying saved notes
+- Add new note functionality
+- Basic text editing view
+
+#### Phase 3: CRUD Operations (30 minutes)
+- Edit existing notes
+- Delete notes functionality
+- Auto-save implementation
+
+#### Phase 4: Search & Polish (30 minutes)
+- Search bar implementation
+- UI refinements and proper styling
+- Testing and bug fixes
+
+**Total Estimated Time: 2-3 hours**
+
+### Learning Objectives
+By building this app, you'll learn:
+- SwiftUI fundamentals (Views, Navigation, Lists)
+- SwiftData for local data persistence
+- MVVM architecture pattern
+- iOS app project structure
+- Basic user interface design principles
+- Testing and debugging iOS apps
+
+### Future Enhancement Ideas (After Mastering Basics)
+- Categories/folders for notes
+- Rich text formatting
+- Note sharing
+- iCloud sync
+- Voice recording (original complex idea!)
+- Export to PDF/text files
+
+This simple foundation will prepare you for more advanced features later!

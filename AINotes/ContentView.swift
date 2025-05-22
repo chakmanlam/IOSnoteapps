@@ -9,13 +9,17 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        // This will be our NoteListView once it's implemented
+        // For now, creating a placeholder to keep the app compiling
+        NavigationView {
+            VStack {
+                Text("Welcome to AINotes!")
+                    .font(.title)
+                Text("We'll implement the NoteListView here soon")
+                    .foregroundColor(.secondary)
+            }
+            .navigationTitle("AINotes")
         }
-        .padding()
     }
 }
 
