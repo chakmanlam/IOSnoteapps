@@ -1,6 +1,6 @@
 //
-//  AINotesApp.swift
-//  AINotes
+//  BrainDumpApp.swift
+//  Brain Dump
 //
 //  Created by Chak Man Lam on 5/22/25.
 //
@@ -9,11 +9,21 @@ import SwiftUI
 import SwiftData
 
 @main
-struct AINotesApp: App {
+struct BrainDumpApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainAppView()
+                .preferredColorScheme(.light)
         }
-        .modelContainer(for: [Note.self])
+        .modelContainer(for: [
+            DailyEntry.self, 
+            ScheduleEntry.self, 
+            TaskItem.self, 
+            Habit.self,
+            IvyLeeTask.self,
+            SomedayMaybeTask.self,
+            SmartFeatures.self,
+            UserInsight.self
+        ])
     }
 }

@@ -1,130 +1,196 @@
-# AINotes - Simple Note-Taking App
+# Brain Dump - Daily Productivity Planner
 ## Product Requirements Document
 
 ### Overview
-AINotes is a simple, clean note-taking app for iOS that allows users to create, edit, and organize their text notes. This is a beginner-friendly project focused on learning iOS development fundamentals without complex integrations.
+Brain Dump is a digital productivity planner that helps users "dump" their thoughts, plans, and reflections into an organized daily system. Inspired by the Intelligent Change Productivity Planner, the app provides a calming space to organize your day, set intentions, track habits, and reflect on progress. The app combines time management, goal setting, and mindfulness practices in a beautiful, focus-friendly interface.
 
 ### Target Platform
 - iOS (iPhone)
-- Minimum iOS version: iOS 15.0
+- Minimum iOS version: iOS 18.0
 - Built with SwiftUI and Xcode 16.3
-- Uses SwiftData for local storage
+- Uses SwiftData for local persistence
+
+### Design Philosophy & Branding
+- **App Name:** Brain Dump
+- **App Icon:** Cute, friendly brain illustration with smile
+- **Clean, minimal aesthetic** inspired by the original planner
+- **Soft Neutral Minimalism** color scheme:
+  - Primary: Warm beige (`#F7F4EF`)
+  - Text/Icons: Graphite gray (`#333333`)
+  - Accents: Mist blue (`#A3BFCB`) or muted sage (`#B7C4A9`)
+  - Action buttons: Desaturated navy (`#445566`)
+- **Typography-focused** with elegant, readable fonts
+- **Calming, focus-friendly** atmosphere that encourages daily use
+- **Cozy, elegant feel** that makes planning feel peaceful, not stressful
 
 ### Core Features
 
-#### 1. Note Management
-- Create new text notes
-- Edit existing notes
-- Delete notes with confirmation
-- Automatic saving as user types
+#### 1. Daily Planner View
+**Main Dashboard displaying:**
+- Current date and day of the week
+- Inspirational quote at the top
+- Quick access to all daily sections
 
-#### 2. Note List View
-- Display all notes in a scrollable list
-- Show note title (first line) and preview (next few lines)
-- Display creation/modification date
-- Pull-to-refresh functionality
+#### 2. Morning Intention Setting
+- **Gratitude section**: "I am grateful for..."
+- **Daily intention**: "Intention for the day"
+- **Most Important Task**: Priority #1 for the day with progress tracking
+- **Secondary Tasks**: 2-3 additional important tasks with checkboxes
 
-#### 3. Note Detail/Edit View
-- Full-screen text editing
-- Large, comfortable text input area
-- Character count display
-- Auto-focus on text field when creating new notes
+#### 3. Time-Based Planning
+- **Hourly schedule**: Time slots from 6:00 AM to 9:30 PM
+- **Editable time entries** for appointments and tasks
+- **Visual time blocking** with different colors
+- **Current time indicator** showing progress through the day
 
-#### 4. Search Functionality
-- Search bar at top of note list
-- Real-time filtering as user types
-- Search through note titles and content
-- Clear search option
+#### 4. Notes Section
+- **Free-form notes area** for ideas, thoughts, and reminders
+- **Rich text support** with basic formatting
+- **Quick capture** functionality
 
-#### 5. Basic Organization
-- Sort notes by date (newest first)
-- Display creation and last modified dates
-- Simple, clean interface with good typography
+#### 5. Evening Reflection
+- **Highlight of the Day**: What went well
+- **What did I learn today?**: Learning capture
+- **What do I want to remember from today?**: Key insights
+- **Tomorrow's focus**: Preparation for next day
 
-### User Interface Design
-- **Clean, minimal design** using system colors and fonts
-- **Navigation-based structure** (List → Detail views)
-- **System-standard components** (NavigationView, List, etc.)
-- **Accessibility support** with proper labels and sizing
-- **Light/Dark mode support** automatically
+#### 6. Habit & Mood Tracking
+- **Habit tracker**: 5 customizable daily habits with progress indicators
+- **Mood tracker**: 5-point emoji scale with optional notes
+- **Rate your day**: 1-5 star rating system
+
+#### 7. Additional Features
+- **Weekly overview**: See patterns and progress
+- **Statistics**: Habit completion rates, mood trends
+- **Customizable habits**: Add/edit personal habits to track
+
+### User Experience Flow
+
+#### Morning Routine (5-10 minutes)
+1. Open app → See today's date and inspirational quote
+2. Fill in gratitude and daily intention
+3. Set Most Important Task and secondary tasks
+4. Review/plan hourly schedule
+5. Ready to start the day focused
+
+#### Throughout the Day
+1. Check schedule and update time blocks
+2. Mark tasks as complete
+3. Add notes and thoughts
+4. Quick habit check-ins
+
+#### Evening Routine (5-10 minutes)
+1. Complete reflection prompts
+2. Rate the day and mood
+3. Mark habit completions
+4. Preview tomorrow (optional)
 
 ### Technical Implementation
 
-#### Architecture
-- **Framework**: SwiftUI with MVVM pattern
-- **Data Storage**: SwiftData for local persistence
-- **No external APIs** or complex integrations
-
-#### Data Model
+#### Data Models
 ```swift
-@Model
-class Note {
-    var id: UUID
-    var title: String // Derived from first line
-    var content: String // Full note content
-    var createdAt: Date
-    var modifiedAt: Date
+@Model class DailyEntry {
+    var date: Date
+    var gratitude: String
+    var intention: String
+    var mostImportantTask: String
+    var mostImportantTaskCompleted: Bool
+    var secondaryTasks: [Task]
+    var scheduleEntries: [ScheduleEntry]
+    var notes: String
+    var highlightOfDay: String
+    var learnings: String
+    var rememberFromToday: String
+    var dayRating: Int
+    var mood: Int
+    var habitCompletions: [String: Bool]
+}
+
+@Model class ScheduleEntry {
+    var time: Date
+    var description: String
+    var color: String
+}
+
+@Model class Task {
+    var description: String
+    var isCompleted: Bool
+    var priority: TaskPriority
+}
+
+@Model class Habit {
+    var name: String
+    var icon: String
+    var isActive: Bool
 }
 ```
 
 #### Key Views
-- **NoteListView**: Main screen showing all notes
-- **NoteDetailView**: Create/edit individual notes
-- **SearchBar**: Built-in SwiftUI search functionality
-
-### User Flow
-1. **App Launch**: Show list of existing notes (empty state if no notes)
-2. **Create Note**: Tap "+" button → Open blank note editor → Start typing
-3. **Edit Note**: Tap existing note → Edit content → Auto-save changes
-4. **Search**: Pull down to reveal search bar → Type to filter notes
-5. **Delete**: Swipe left on note → Confirm deletion
-
-### Success Criteria
-- **Functional CRUD**: Create, read, update, delete notes successfully
-- **Data Persistence**: Notes save and load properly between app launches
-- **Smooth Performance**: Fast, responsive interface
-- **Intuitive UX**: Easy to use without instructions
-- **Reliable**: No crashes or data loss
+- **DailyPlannerView**: Main dashboard
+- **MorningIntentionView**: Gratitude and goal setting
+- **SchedulePlannerView**: Hourly time blocking
+- **NotesView**: Free-form note taking
+- **EveningReflectionView**: Daily reflection
+- **HabitTrackerView**: Habit monitoring
+- **WeeklyOverviewView**: Progress summary
+- **SettingsView**: Habit customization
 
 ### Development Phases
 
-#### Phase 1: Basic Structure (30 minutes)
-- Create Xcode project with proper setup
-- Basic SwiftUI navigation structure
-- Simple Note model with SwiftData
+#### Phase 1: Foundation (Week 1)
+- **Basic app structure** with navigation
+- **Daily entry model** and SwiftData setup
+- **Simple daily view** with date display
+- **Basic text input fields** for core sections
 
-#### Phase 2: Core Functionality (45 minutes)
-- Note list view displaying saved notes
-- Add new note functionality
-- Basic text editing view
+#### Phase 2: Core Planning Features (Week 1-2)
+- **Morning intention section** (gratitude, intention, tasks)
+- **Time-based scheduling** interface
+- **Task management** with checkboxes
+- **Basic notes functionality**
 
-#### Phase 3: CRUD Operations (30 minutes)
-- Edit existing notes
-- Delete notes functionality
-- Auto-save implementation
+#### Phase 3: Reflection & Tracking (Week 2)
+- **Evening reflection prompts**
+- **Habit tracking system**
+- **Mood and day rating**
+- **Data persistence** between sessions
 
-#### Phase 4: Search & Polish (30 minutes)
-- Search bar implementation
-- UI refinements and proper styling
-- Testing and bug fixes
+#### Phase 4: Visual Polish (Week 3)
+- **Beautiful UI design** matching planner aesthetic
+- **Custom color scheme** (beige/cream/gold)
+- **Typography improvements**
+- **Smooth animations** and transitions
 
-**Total Estimated Time: 2-3 hours**
+#### Phase 5: Advanced Features (Week 3-4)
+- **Weekly overview** and statistics
+- **Habit customization**
+- **Inspirational quotes** integration
+- **Export/sharing** functionality
+
+### Success Criteria
+- **Daily usability**: App encourages daily use through intuitive design
+- **Complete workflow**: Morning planning → day execution → evening reflection
+- **Data reliability**: All entries saved and accessible
+- **Performance**: Smooth, responsive interface
+- **Visual appeal**: Matches quality and aesthetic of physical planner
+
+### Future Enhancements (Post-MVP)
+- **Apple Watch integration** for quick habit check-ins
+- **Notification system** for planning reminders
+- **iCloud sync** across devices
+- **Sharing capabilities** for accountability
+- **Analytics dashboard** with trends and insights
+- **Template system** for recurring plans
+- **Dark mode** variant of the design
 
 ### Learning Objectives
-By building this app, you'll learn:
-- SwiftUI fundamentals (Views, Navigation, Lists)
-- SwiftData for local data persistence
-- MVVM architecture pattern
-- iOS app project structure
-- Basic user interface design principles
-- Testing and debugging iOS apps
+By building this app, you'll master:
+- **Complex SwiftUI layouts** with multiple sections
+- **Advanced SwiftData** relationships and queries
+- **Custom UI components** and styling
+- **Date/time handling** in iOS
+- **State management** across multiple views
+- **User experience design** principles
+- **App architecture** for larger projects
 
-### Future Enhancement Ideas (After Mastering Basics)
-- Categories/folders for notes
-- Rich text formatting
-- Note sharing
-- iCloud sync
-- Voice recording (original complex idea!)
-- Export to PDF/text files
-
-This simple foundation will prepare you for more advanced features later!
+This productivity planner will be a comprehensive iOS development learning experience while creating something truly useful and beautiful!
